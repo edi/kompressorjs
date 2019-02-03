@@ -1,11 +1,11 @@
 /*!
- * Compressor.js v1.1.0
+ * Compressor.js v1.1.1
  * https://github.com/EduardJS/kompressorjs
  *
  * Copyright 2018-present Eduard Duluman
  * Released under the MIT license
  *
- * Date: 2019-01-12T22:33:00.648Z
+ * Date: 2019-02-03T14:49:48.804Z
  */
 
 (function (global, factory) {
@@ -859,17 +859,13 @@
 
         if (result) {
           // Returns original file if the result is greater than it and without size related options
-          if (options.strict && result.size > file.size && options.mimeType === file.type && !options.scaleAndCenterCrop && !(options.width > naturalWidth || options.height > naturalHeight || options.minWidth > naturalWidth || options.minHeight > naturalHeight)) {
-            result = file;
-          } else {
-            var date = new Date();
-            result.lastModified = date.getTime();
-            result.lastModifiedDate = date;
-            result.name = file.name; // Convert the extension to match its type
+          var date = new Date();
+          result.lastModified = date.getTime();
+          result.lastModifiedDate = date;
+          result.name = file.name; // Convert the extension to match its type
 
-            if (result.name && result.type !== file.type) {
-              result.name = result.name.replace(REGEXP_EXTENSION, imageTypeToExtension(result.type));
-            }
+          if (result.name && result.type !== file.type) {
+            result.name = result.name.replace(REGEXP_EXTENSION, imageTypeToExtension(result.type));
           }
         } else {
           // Returns original file if the result is null in some cases.

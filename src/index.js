@@ -290,28 +290,18 @@ export default class Compressor {
 
     if (result) {
       // Returns original file if the result is greater than it and without size related options
-      if (options.strict && result.size > file.size && options.mimeType === file.type
-        && !options.scaleAndCenterCrop && !(
-        options.width > naturalWidth
-        || options.height > naturalHeight
-        || options.minWidth > naturalWidth
-        || options.minHeight > naturalHeight
-      )) {
-        result = file;
-      } else {
-        const date = new Date();
+      const date = new Date();
 
-        result.lastModified = date.getTime();
-        result.lastModifiedDate = date;
-        result.name = file.name;
+      result.lastModified = date.getTime();
+      result.lastModifiedDate = date;
+      result.name = file.name;
 
-        // Convert the extension to match its type
-        if (result.name && result.type !== file.type) {
-          result.name = result.name.replace(
-            REGEXP_EXTENSION,
-            imageTypeToExtension(result.type),
-          );
-        }
+      // Convert the extension to match its type
+      if (result.name && result.type !== file.type) {
+        result.name = result.name.replace(
+          REGEXP_EXTENSION,
+          imageTypeToExtension(result.type),
+        );
       }
     } else {
       // Returns original file if the result is null in some cases.

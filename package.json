@@ -1,6 +1,6 @@
 {
   "name": "kompressorjs",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "JavaScript image compressor.",
   "main": "dist/compressor.common.js",
   "module": "dist/compressor.esm.js",
@@ -27,7 +27,7 @@
     "lint": "npm run lint:js && npm run lint:css",
     "lint:css": "stylelint {docs,examples}/**/*.{css,html} --fix",
     "lint:js": "eslint src test *.js --fix",
-    "release": "npm run clear && npm run lint && npm run build && npm run compress && npm test",
+    "release": "npm run clear && npm run build && npm run compress && npm test",
     "start": "npm run dev",
     "test": "cross-env NODE_ENV=test karma start test/karma.conf.js"
   },
