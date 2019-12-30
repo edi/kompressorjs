@@ -1,7 +1,7 @@
 describe('convertSize', () => {
   it('should not convert the image from PNG to JPEG', (done) => {
     window.loadImageAsBlob('/base/docs/images/picture.png', (image) => {
-      const compressor = new Compressor(image, {
+      const compressor = new Kompressor(image, {
         success(result) {
           expect(image.type).to.equal('image/png');
           expect(result.type).to.equal('image/png');
@@ -15,7 +15,7 @@ describe('convertSize', () => {
 
   it('should convert the image from PNG to JPEG', (done) => {
     window.loadImageAsBlob('/base/docs/images/picture.png', (image) => {
-      const compressor = new Compressor(image, {
+      const compressor = new Kompressor(image, {
         convertSize: 0,
         success(result) {
           expect(image.type).to.equal('image/png');

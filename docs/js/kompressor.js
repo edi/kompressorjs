@@ -5,14 +5,14 @@
  * Copyright 2018-present Eduard Duluman
  * Released under the MIT license
  *
- * Date: 2019-02-03T14:49:48.804Z
+ * Date: 2019-12-30T01:01:45.349Z
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, global.Kompressor = factory());
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -69,20 +69,35 @@
     return _extends.apply(this, arguments);
   }
 
-  function _objectSpread(target) {
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
-      var ownKeys = Object.keys(source);
 
-      if (typeof Object.getOwnPropertySymbols === 'function') {
-        ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
-          return Object.getOwnPropertyDescriptor(source, sym).enumerable;
-        }));
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
       }
-
-      ownKeys.forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
     }
 
     return target;
@@ -184,7 +199,7 @@
         }
       }
 
-      if (module.exports) {
+      if ( module.exports) {
         module.exports = dataURLtoBlob;
       } else {
         window.dataURLtoBlob = dataURLtoBlob;
@@ -192,12 +207,12 @@
     })(window);
   });
 
-  var isBlob = function isBlob(input) {
+  var isBlob = function isBlob(value) {
     if (typeof Blob === 'undefined') {
       return false;
     }
 
-    return input instanceof Blob || Object.prototype.toString.call(input) === '[object Blob]';
+    return value instanceof Blob || Object.prototype.toString.call(value) === '[object Blob]';
   };
 
   var DEFAULTS = {
@@ -331,8 +346,8 @@
     error: null
   };
 
-  var IN_BROWSER = typeof window !== 'undefined';
-  var WINDOW = IN_BROWSER ? window : {};
+  var IS_BROWSER = typeof window !== 'undefined' && typeof window.document !== 'undefined';
+  var WINDOW = IS_BROWSER ? window : {};
 
   var slice = Array.prototype.slice;
   /**
@@ -403,6 +418,7 @@
     var uint8 = new Uint8Array(arrayBuffer);
 
     while (uint8.length > 0) {
+      // XXX: Babel's `toConsumableArray` helper will throw error in IE or Safari 9
       // eslint-disable-next-line prefer-spread
       chunks.push(fromCharCode.apply(null, toArray(uint8.subarray(0, chunkSize))));
       uint8 = uint8.subarray(chunkSize);
@@ -538,8 +554,6 @@
       case 8:
         rotate = -90;
         break;
-
-      default:
     }
 
     return {
@@ -585,7 +599,7 @@
 
       this.file = file;
       this.image = new Image();
-      this.options = _objectSpread({}, DEFAULTS, options);
+      this.options = _objectSpread2({}, DEFAULTS, {}, options);
       this.aborted = false;
       this.result = null;
       this.init();
@@ -632,12 +646,28 @@
           reader.onload = function (_ref) {
             var target = _ref.target;
             var result = target.result;
+            var data = {};
 
-            _this.load(checkOrientation ? _objectSpread({}, parseOrientation(resetAndGetOrientation(result)), {
-              url: arrayBufferToDataURL(result, mimeType)
-            }) : {
-              url: result
-            });
+            if (checkOrientation) {
+              // Reset the orientation value to its default value 1
+              // as some iOS browsers will render image with its orientation
+              var orientation = resetAndGetOrientation(result);
+
+              if (orientation > 1 || !URL) {
+                // Generate a new URL which has the default orientation value
+                data.url = arrayBufferToDataURL(result, mimeType);
+
+                if (orientation > 1) {
+                  _extends(data, parseOrientation(orientation));
+                } else {
+                  data.url = URL.createObjectURL(file);
+                }
+              }
+            } else {
+              data.url = result;
+            }
+
+            _this.load(data);
           };
 
           reader.onabort = function () {
@@ -668,7 +698,7 @@
             image = this.image;
 
         image.onload = function () {
-          _this2.draw(_objectSpread({}, data, {
+          _this2.draw(_objectSpread2({}, data, {
             naturalWidth: image.naturalWidth,
             naturalHeight: image.naturalHeight
           }));
@@ -680,7 +710,13 @@
 
         image.onerror = function () {
           _this2.fail(new Error('Failed to load the image.'));
-        };
+        }; // Match all browsers that use WebKit as the layout engine in iOS devices,
+        // such as Safari for iOS, Chrome for iOS, and in-app browsers.
+
+
+        if (WINDOW.navigator && /(?:iPad|iPhone|iPod).*?AppleWebKit/i.test(WINDOW.navigator.userAgent)) {
+          image.crossOrigin = 'anonymous';
+        }
 
         image.alt = file.name;
         image.src = data.url;
@@ -933,4 +969,4 @@
 
   return Kompressor;
 
-}));
+})));

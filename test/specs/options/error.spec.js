@@ -1,7 +1,7 @@
 describe('error', () => {
   it('should be `null` be default', (done) => {
     window.loadImageAsBlob('/base/docs/images/picture.jpg', (image) => {
-      const compressor = new Compressor(image);
+      const compressor = new Kompressor(image);
 
       expect(compressor.options.error).to.be.null;
       done();
@@ -9,7 +9,7 @@ describe('error', () => {
   });
 
   it('should execute the `error` hook function', (done) => {
-    const compressor = new Compressor(null, {
+    const compressor = new Kompressor(null, {
       error(error) {
         expect(error).to.be.an.instanceOf(Error);
         setTimeout(() => {
@@ -24,7 +24,7 @@ describe('error', () => {
 
   it('should throw error directly without a `error` hook function', () => {
     expect(() => {
-      new Compressor(null);
+      new Kompressor(null);
     }).to.throw();
   });
 });

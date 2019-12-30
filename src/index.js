@@ -16,15 +16,15 @@ import {
 const { ArrayBuffer, FileReader } = WINDOW;
 const URL = WINDOW.URL || WINDOW.webkitURL;
 const REGEXP_EXTENSION = /\.\w+$/;
-const AnotherCompressor = WINDOW.Compressor;
+const AnotherKompressor = WINDOW.Kompressor;
 
 /**
  * Creates a new image compressor.
  * @class
  */
-export default class Compressor {
+export default class Kompressor {
   /**
-   * The constructor of Compressor.
+   * The constructor of Kompressor.
    * @param {File|Blob} file - The target image file for compressing.
    * @param {Object} [options] - The options for compressing.
    */
@@ -362,11 +362,11 @@ export default class Compressor {
 
   /**
    * Get the no conflict compressor class.
-   * @returns {Compressor} The compressor class.
+   * @returns {Kompressor} The compressor class.
    */
   static noConflict() {
-    window.Compressor = AnotherCompressor;
-    return Compressor;
+    window.Kompressor = AnotherKompressor;
+    return Kompressor;
   }
 
   /**

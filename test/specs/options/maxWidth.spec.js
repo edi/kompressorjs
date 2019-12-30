@@ -1,7 +1,7 @@
 describe('maxWidth', () => {
   it('should be `Infinity` by default', (done) => {
     window.loadImageAsBlob('/base/docs/images/picture.png', (image) => {
-      const compressor = new Compressor(image);
+      const compressor = new Kompressor(image);
 
       expect(compressor.options.maxWidth).to.equal(Infinity);
       done();
@@ -10,7 +10,7 @@ describe('maxWidth', () => {
 
   it('should not greater than the given maximum width', (done) => {
     window.loadImageAsBlob('/base/docs/images/picture.png', (image) => {
-      const compressor = new Compressor(image, {
+      const compressor = new Kompressor(image, {
         maxWidth: 100,
         success(result) {
           const newImage = new Image();
@@ -29,7 +29,7 @@ describe('maxWidth', () => {
 
   it('should not greater than the given maximum width even it is rotated', (done) => {
     window.loadImageAsBlob('/base/docs/images/picture.jpg', (image) => {
-      new Compressor(image, {
+      new Kompressor(image, {
         maxWidth: 100,
         success(result) {
           const newImage = new Image();
@@ -46,7 +46,7 @@ describe('maxWidth', () => {
 
   it('should be ignored when the given maximum width does not greater than 0', (done) => {
     window.loadImageAsBlob('/base/docs/images/picture.png', (image) => {
-      new Compressor(image, {
+      new Kompressor(image, {
         maxWidth: -100,
         success(result) {
           const newImage = new Image();
@@ -63,7 +63,7 @@ describe('maxWidth', () => {
 
   it('should be resized to fit the aspect ratio of the original image when the `maxHeight` option is set', (done) => {
     window.loadImageAsBlob('/base/docs/images/picture.png', (image) => {
-      new Compressor(image, {
+      new Kompressor(image, {
         maxWidth: 100,
         maxHeight: 60,
         success(result) {

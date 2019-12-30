@@ -3,7 +3,7 @@
     "mocha": true
   },
   "globals": {
-    "Compressor": true,
+    "Kompressor": true,
     "expect": true
   },
   "rules": {

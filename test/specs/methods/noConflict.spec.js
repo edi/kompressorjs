@@ -1,16 +1,16 @@
 describe('noConflict', () => {
   it('should be a static method', () => {
-    expect(Compressor.noConflict).to.be.a('function');
+    expect(Kompressor.noConflict).to.be.a('function');
   });
 
-  it('should return the Compressor class itself', () => {
-    const { Compressor } = window;
-    const ImageCompressor = Compressor.noConflict();
+  it('should return the Kompressor class itself', () => {
+    const { Kompressor } = window;
+    const ImageKompressor = Kompressor.noConflict();
 
-    expect(ImageCompressor).to.equal(Compressor);
-    expect(window.Compressor).to.be.undefined;
+    expect(ImageKompressor).to.equal(Kompressor);
+    expect(window.Kompressor).to.be.undefined;
 
     // Reverts it for the rest test suites
-    window.Compressor = ImageCompressor;
+    window.Kompressor = ImageKompressor;
   });
 });

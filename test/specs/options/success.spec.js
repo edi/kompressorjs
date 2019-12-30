@@ -1,7 +1,7 @@
 describe('success', () => {
   it('should be `null` be default', (done) => {
     window.loadImageAsBlob('/base/docs/images/picture.jpg', (image) => {
-      const compressor = new Compressor(image);
+      const compressor = new Kompressor(image);
 
       expect(compressor.options.success).to.be.null;
       done();
@@ -10,7 +10,7 @@ describe('success', () => {
 
   it('should execute the `success` hook function', (done) => {
     window.loadImageAsBlob('/base/docs/images/picture.jpg', (image) => {
-      const compressor = new Compressor(image, {
+      const compressor = new Kompressor(image, {
         success(result) {
           expect(this).to.equal(compressor);
           expect(result).to.be.an.instanceOf(Blob);

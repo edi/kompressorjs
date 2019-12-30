@@ -1,10 +1,10 @@
-describe('Compressor', () => {
+describe('Kompressor', () => {
   it('should be a class (function)', () => {
-    expect(Compressor).to.be.a('function');
+    expect(Kompressor).to.be.a('function');
   });
 
   it('should throw error when the first argument is not an image File or Blob object', () => {
-    new Compressor(new Blob(['Hello, World!']), {
+    new Kompressor(new Blob(['Hello, World!']), {
       error(err) {
         expect(err.message).to.equal('The first argument must be an image File or Blob object.');
       },
@@ -12,7 +12,7 @@ describe('Compressor', () => {
   });
 
   it('should throw error when the first argument is not an valid image File or Blob object', () => {
-    new Compressor(new Blob(['Hello, World!'], {
+    new Kompressor(new Blob(['Hello, World!'], {
       type: 'image/jpeg',
     }), {
       error(err) {
@@ -23,7 +23,7 @@ describe('Compressor', () => {
 
   it('should throw error when failed to read the image with FileReader', (done) => {
     window.loadImageAsBlob('/base/docs/images/picture.jpg', (image) => {
-      const compressor = new Compressor(image, {
+      const compressor = new Kompressor(image, {
         error(err) {
           expect(err.message).to.equal('Failed to read the image with FileReader.');
           done();
@@ -38,7 +38,7 @@ describe('Compressor', () => {
 
   it('should throw error when failed to load the image', (done) => {
     window.loadImageAsBlob('/base/docs/images/picture.jpg', (image) => {
-      const compressor = new Compressor(image, {
+      const compressor = new Kompressor(image, {
         checkOrientation: false,
         error(err) {
           expect(err.message).to.equal('Failed to load the image.');
@@ -54,7 +54,7 @@ describe('Compressor', () => {
 
   it('should work with polyfill library when `canvas.toBlob` is not supported', (done) => {
     window.loadImageAsBlob('/base/docs/images/picture.jpg', (image) => {
-      new Compressor(image, {
+      new Kompressor(image, {
         drew(context, canvas) {
           canvas.toBlob = null;
         },
@@ -68,7 +68,7 @@ describe('Compressor', () => {
 
   it('should work when the `canvas.toBlob` function does not output any blob object', (done) => {
     window.loadImageAsBlob('/base/docs/images/picture.jpg', (image) => {
-      new Compressor(image, {
+      new Kompressor(image, {
         drew(context, canvas) {
           canvas.toBlob = (callback) => {
             callback(null);

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Compressor.js</title>
+  <title>Kompressor.js</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <style>
     img {
@@ -29,22 +29,22 @@
       </div>
     </div>
   </div>
-  <script src="../js/compressor.js"></script>
+  <script src="../js/kompressor.js"></script>
   <script>
     window.addEventListener('DOMContentLoaded', function () {
-      var Compressor = window.Compressor;
+      var Kompressor = window.Kompressor;
       var URL = window.URL || window.webkitURL;
       var image = document.getElementById('image');
       var output = document.getElementById('output');
       var xhr = new XMLHttpRequest();
 
       xhr.onload = function () {
-        new Compressor(xhr.response, {
+        new Kompressor(xhr.response, {
           strict: false,
           drew: function (context, canvas) {
             context.fillStyle = '#fff';
             context.font = '2rem serif';
-            context.fillText('Powered by Compressor.js', 20, canvas.height - 20);
+            context.fillText('Powered by kompressor.js', 20, canvas.height - 20);
           },
           success: function (result) {
             var newImage = new Image();

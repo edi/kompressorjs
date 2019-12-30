@@ -2,7 +2,7 @@ window.addEventListener('DOMContentLoaded', function () {
   var Vue = window.Vue;
   var URL = window.URL || window.webkitURL;
   var XMLHttpRequest = window.XMLHttpRequest;
-  var Compressor = window.Compressor;
+  var Kompressor = window.Kompressor;
 
   new Vue({
     el: '#app',
@@ -75,7 +75,7 @@ window.addEventListener('DOMContentLoaded', function () {
         }
 
         this.input = file;
-        new Compressor(file, this.options);
+        new Kompressor(file, this.options);
       },
 
       change: function (e) {
