@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.1.3 (Nov 23, 2019)
+
+- Fix the `The operation is insecure` error (#57).
+
+## 1.1.2 (Jan 23, 2019)
+
+- Fix wrong generated URL when the given image's orientation is 1 (#64).
+
+## 1.1.1 (Jan 19, 2019)
+
+- Regenerate the initial URL only when the orientation was reset for better performance (#63).
+
 ## 1.1.0 (Jan 13, 2019)
 
 - Convert `TypedArray` to `Array` manually instead of using Babel helpers for better browser compatibility (#60).
